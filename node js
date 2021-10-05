@@ -1,1 +1,85 @@
-poner a quie lo de node js
+const express = require('express');  //is the module that enable us to create a restful api 
+const bodyParser = require('body-parser'); //it allow us to use json back and forth between api and client
+const cors = require('cors'); //to allow our restapi to be accessed from anywhere (CROSS ORIGINS)
+
+const app = express();
+const port = 40000;
+
+app.use(bodyParser.json({limit:'100mb'}));
+app.use(bodyParser.urlencoded({
+    extended:true,
+    limit:'100mb'
+}));
+
+app.use(cors());
+
+app.all('*',function(req,res,next){
+    res.header('Access-Control-Allow-Origin','*');//WE ALLOW ALL IP ADDRESSES
+    res.header('Access-Control-Allow-Methods','PUT,GET,POST,DELETE,OPTIONS');//WITH THIS WE ALLOW ALL THE HTTP VERBS
+    res.header('Access-Control-Allow-Headers','Content-Type');//WITH THIS WE ALLOW THE USE OF THE HEADER CONTENT TYPE
+    next();
+});
+
+//THE ACTUAL ENDPOINT
+a = Number('1');
+b = Number('2');
+c = Number('3');
+L = Number('4');
+base = Number('5');
+altura = Number('6');
+Completname = String('juan pablo lopez reyes');
+adress = String('apodaca,margaritas,hacienda nogales,880');
+school = String('tecnologico de nuevo leon');
+
+
+let suma = a + b
+let resta = b - a
+let multiplicacion = a * b * c
+let divicion = a / b
+let Areacuad= L * L
+let Areatrian = (base * altura ) / 2
+
+var dat= new Date(); 
+app.get('/fecha',function(req,res){
+    res.send('Fecha'+dat);
+});
+
+app.get('/name',function(req,res){
+    res.send('Nombre completo '+Completname);
+});
+app.get('/adress',function(req,res){
+    res.send('Direccion '+adress);
+});
+app.get('/school',function(req,res){
+    res.send('Nombre de la escuela '+school);
+});
+app.post('/suma',function(req,res){
+    let requestBody = req.body;
+    res.send('Resultado de la Suma '+ suma)
+});
+app.post('/resta',function(req,res){
+    let requestBody = req.body;
+    res.send('Resultado de la resta '+ resta)
+});
+app.post('/multiplicacion',function(req,res){
+    let requestBody = req.body;
+    res.send('Resultado de la multiplicacion '+ multiplicacion)
+});
+app.post('/divicion',function(req,res){
+    let requestBody = req.body;
+    res.send('Resultado de la divicion '+ divicion)
+});
+
+app.post('/areacuad',function(req,res){
+    let requestBody = req.body;
+    res.send('Resultado del Area Cuadrado '+ Areacuad)
+});
+app.post('/areatrian',function(req,res){
+    let requestBody = req.body;
+    res.send('Resultado del Area de un Triangulo '+ Areatrian)
+});
+
+
+app.listen(port,function(){
+    console.log('MY APP IS RUNNING AT THE PORT ' + port);
+})
